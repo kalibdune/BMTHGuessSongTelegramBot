@@ -3,7 +3,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 import lyrics_data as lyric
 
-bot = telebot.TeleBot('1971165515:AAEUzD-DcnqYP6VRUYELipvTAhO3WEoWo6E', parse_mode='MARKDOWN')
+bot = telebot.TeleBot('', parse_mode='MARKDOWN')
 
 states = {
     'answer': '',
