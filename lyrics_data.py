@@ -24,10 +24,10 @@ def get_song_data(text_path: str, name_path: str) -> dict:
         'song_name': ''
     }
 
-    with open(text_path, 'r') as file:
+    with open(text_path, 'r', encoding='UTF-8') as file:
         song_data['song_text'] = file.readlines()
 
-    with open(name_path, 'r') as file:
+    with open(name_path, 'r', encoding='UTF-8') as file:
         song_data['song_name'] = file.read()
 
     return song_data

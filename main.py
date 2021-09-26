@@ -3,7 +3,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 import lyrics_data as lyric
 
-bot = telebot.TeleBot('', parse_mode='MARKDOWN')
+bot = telebot.TeleBot('1971165515:AAEUzD-DcnqYP6VRUYELipvTAhO3WEoWo6E', parse_mode='MARKDOWN')
 
 states = {
     'answer': '',
@@ -29,13 +29,16 @@ def callback_query(call):
                     to_rand = len(states['song_text'])-3
                 else:
                     to_rand = 0
-                try:
+                try:#if to_rand < 0
                     num = random.randint(0, to_rand)
                 except:
                     num = 0
                 for i in range(2):
-                    text += states['song_text'][num]
-                    num+=1
+                    try:#if no rows anymore
+                        text += song['song_text'][num]
+                        num+=1
+                    except IndexError:
+                        text+= '\n--------'
                     
                 states['hints_count'] -= 1
                 hint_text = 'Осталось ' + str(states['hints_count']) + ' подсказки'
@@ -67,18 +70,21 @@ def send_text(message, states=states):
         states['song_text'] = song['song_text']
         
         text = ''
-        if len(song['song_text'])-7 < 0:
+        if len(song['song_text'])-7 <= 0:
             to_rand = 0
         else:
             to_rand = len(song['song_text'])-7
-        try:
+        try:#if to_rand < 0
             num = random.randint(0, to_rand)
         except:
             num = 0
         for i in range(6):
-            text += song['song_text'][num]
-            num+=1
-    
+            try:#if no rows anymore
+                text += song['song_text'][num]
+                num+=1
+            except IndexError:
+                text+= '\n--------'
+        print('\n')
         states['answer'] = song['song_name'].rstrip()
 
         bot.send_message(message.chat.id, introduction)    
